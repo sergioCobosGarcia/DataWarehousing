@@ -16,10 +16,10 @@ Fecha de corte anterior:
 Fecha del anterior trimestre.
 
 ## Desde usuario SYSTEM o usuario con rol SYSDBA
-
+~~~
 grant create any procedure to SCHEMAXXXXX;		 
 grant execute any procedure to SCHEMAXXXXX;
-
+~~~
 ## Creación de la tabla en SCHEMAXXXXX
 ~~~
 drop table DIM_TIEMPO;
