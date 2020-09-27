@@ -398,5 +398,44 @@ SELECT employee_id, last_name, manager_id, LEVEL
 
 #### Funciones de ventana
 
+##### Funcion LAG() y LEAD()
+
+Con las funciones LAG() y LEAD() se obtienen el valor anterior o posterior en una lista ordenada. Con estas funciones se evita la necesidad de realizar un join con la misma tabla.
+
+LAG: Obtendría el valor del registro anterior
+LEAD: Obtendría el valor del registro posterior
+
+~~~
+
+CREATE TABLE tabla_LAG
+(clave NUMBER,
+ cantidad NUMBER,
+ nombre VARCHAR2(100));
+ 
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (1,1,'Luis');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (2,1,'Carlos');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (3,2,'Elena');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (4,NULL, 'Luisa');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (5,NULL,'Jacobo');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (6,1,'Carmen');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (7,2,'Mercedes');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (9,1,'Pepe');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (10,1,'Amelia');
+INSERT INTO tabla_LAG (clave, cantidad, nombre) VALUES (11,3,'Jose');
+commit;
+
+SELECT clave,
+       cantidad,
+       nombre,
+       LAG(nombre,1,'--') OVER (PARTITION BY cantidad order by clave) nombre_siguiente,   
+       LAG(nombre,2,'--') OVER (PARTITION BY cantidad order by clave) nombre_2siguiente,   
+       LEAD(nombre,1,'--') OVER (PARTITION BY cantidad order by clave) nombre_anterior   
+  FROM tabla_LAG
+ ORDER BY cantidad, clave;
+
+~~~
+
+![Lag&Lead](https://i.ibb.co/bQKDKdC/lag-y-lead.jpg)
+
 #### Funciones DWH
 
