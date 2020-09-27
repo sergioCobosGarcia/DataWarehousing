@@ -402,8 +402,9 @@ SELECT employee_id, last_name, manager_id, LEVEL
 
 Con las funciones LAG() y LEAD() se obtienen el valor anterior o posterior en una lista ordenada. Con estas funciones se evita la necesidad de realizar un join con la misma tabla.
 
-LAG: Obtendría el valor del registro anterior
-LEAD: Obtendría el valor del registro posterior
+LAG: Obtendría el valor del registro anterior.
+
+LEAD: Obtendría el valor del registro posterior.
 
 ~~~
 
@@ -442,6 +443,8 @@ SELECT clave,
 ##### Función NTILE()
 
 ![NTILE](https://cdn.oracletutorial.com/wp-content/uploads/2019/01/Oracle-NTILE.png)
+
+
 Distribuye las filas en un número específico de grupos y asigna un número a cada grupo en orden incremental comenzando con 1.
 ~~~
  select 
