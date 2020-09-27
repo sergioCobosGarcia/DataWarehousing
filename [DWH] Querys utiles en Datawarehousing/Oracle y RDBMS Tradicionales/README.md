@@ -442,6 +442,15 @@ SELECT clave,
 ##### Función NTILE()
 
 ![NTILE](https://cdn.oracletutorial.com/wp-content/uploads/2019/01/Oracle-NTILE.png)
+Distribuye las filas en un número específico de grupos y asigna un número a cada grupo en orden incremental comenzando con 1.
+~~~
+ select 
+ nombre, cantidad, clave, ntile(3)
+ over (partition by cantidad order by nombre desc) ntile_buckets
+ from tabla_LAG;
+~~~
+
+![ntile](https://i.ibb.co/y8TW48D/Ntile.jpg)
 
 #### Funciones DWH
 
