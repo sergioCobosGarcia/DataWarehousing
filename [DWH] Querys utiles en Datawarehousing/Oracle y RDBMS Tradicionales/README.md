@@ -275,6 +275,27 @@ FROM schema.Tabla;
 
 
 #### Query para sacar las referencias que tengan mas de un tipo de relacion, sin repetir el tipo de referencia y tengan la misma fecha de inicio
+
+#####Tengo esto
+
+| Referencia |	Tipo_relacion	| Categoría
+--- | ---: | :---:
+2342 |	abc	| 1
+2342 |	dfg	| 1
+2342 |	hij	| 1
+2345 |	abc |	1
+2675 |	dfg | 1
+
+##### Quiero esto
+
+| Referencia |	Tipo_relacion	| Categoría
+--- | ---: | :---:
+2342 |	abc	| 1
+2342 |	dfg	| 1
+2342 |	hij	| 1
+
+##### Query
+
   ~~~~
     select DISTINCT referencia
     FROM
@@ -290,10 +311,4 @@ FROM schema.Tabla;
     order by 1;
 ~~~~
 
-| Referencia |	Tipo_relacion	| Categoría
---- | ---: | :---:
-2342 |	abc	| 1
-2342 |	dfg	| 1
-2342 |	hij	| 1
-2345 |	abc |	1
-2675 |	dfg | 1
+
