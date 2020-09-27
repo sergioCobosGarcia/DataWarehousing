@@ -272,3 +272,20 @@ SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','VARCHAR2')=1 THEN CASE WHEN campo IS N
 ,SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','NUMBER')=1 THEN CASE WHEN campo =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros
 FROM schema.Tabla;
 ~~~~
+
+
+#### Query para sacar las referencias que tengan mas de un tipo de relacion, sin repetir el tipo de referencia y tengan la misma fecha de inicio
+  ~~~~
+    select DISTINCT referencia
+    FROM
+    schema.tabla
+    where referencia in ( select referencia
+                                from schema.tabla
+                                group by referencia
+                                having count(distinct tipo_relacion) > 1)
+    and referencia in ( select referencia
+                                from schema.tabla
+                                group by referencia
+                                having count(distinct fecha_inicio) = 1)
+    order by 1;
+~~~~
