@@ -469,3 +469,7 @@ ORDER BY
 
 ##### Funciones PIVOT() UNPIVOT()
 
+##### NVL2()
+
+##### CASE WHEN
+
