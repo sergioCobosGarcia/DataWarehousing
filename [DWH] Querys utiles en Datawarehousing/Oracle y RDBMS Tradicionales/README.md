@@ -259,8 +259,9 @@ create or replace PROCEDURE P_REBUILD_INDEXES(
 
 #### Estadisticas particiones
 
-
+~~~~
 BEGIN DBMS_STATS.GATHER_TABLE_STATS (OWNNAME => 'schema', TABNAME => 'tabla', GRANULARITY => 'PARTITION', PARTNAME=> 'nombreparticion', degree=> 4); END;
+~~~~
 
 #### Query DataProfiling
 ~~~~
