@@ -396,9 +396,9 @@ SELECT employee_id, last_name, manager_id, LEVEL
 
 ![Ejemplo](https://i.ibb.co/h7rQ1dG/jerarquicas.jpg)
 
-#### Funciones de ventana
+#### Funciones de ventana OVER PARITION
 
-##### Funcion LAG() y LEAD()
+##### Función LAG() y LEAD()
 
 Con las funciones LAG() y LEAD() se obtienen el valor anterior o posterior en una lista ordenada. Con estas funciones se evita la necesidad de realizar un join con la misma tabla.
 
@@ -437,5 +437,13 @@ SELECT clave,
 
 ![Lag&Lead](https://i.ibb.co/bQKDKdC/lag-y-lead.jpg)
 
+##### Función RANK()
+
+##### Función NTILE()
+
 #### Funciones DWH
+
+##### Función CUBE()
+
+##### Funciones PIVOT() UNPIVOT()
 
