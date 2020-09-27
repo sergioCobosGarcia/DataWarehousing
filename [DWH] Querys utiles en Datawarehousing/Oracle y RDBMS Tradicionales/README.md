@@ -289,3 +289,11 @@ FROM schema.Tabla;
                                 having count(distinct fecha_inicio) = 1)
     order by 1;
 ~~~~
+
+| Referencia |	Tipo_relacion	| Categoría
+--- | ---: | :---:
+2342 |	abc	| 1
+2342 |	dfg	| 1
+2342 |	hij	| 1
+2345 |	abc |	1
+2675 |	dfg | 1
