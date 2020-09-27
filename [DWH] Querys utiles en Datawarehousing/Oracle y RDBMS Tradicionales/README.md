@@ -273,7 +273,7 @@ SELECT 'analisis_futbol_europeo.team' AS Tabla,'TEAM_FIFA_API_ID' AS Campo, coun
 
 ![Data-Profiling](https://i.ibb.co/qms9r7c/Data-Profiling.jpg)
 
-![Excel](https://i.ibb.co/WKMYN4m/excel-Data-Profiling.jpg
+![Excel](https://i.ibb.co/WKMYN4m/excel-Data-Profiling.jpg)
 
 
 
