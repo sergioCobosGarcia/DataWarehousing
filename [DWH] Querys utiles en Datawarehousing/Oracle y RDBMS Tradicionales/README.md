@@ -265,18 +265,21 @@ BEGIN DBMS_STATS.GATHER_TABLE_STATS (OWNNAME => 'schema', TABNAME => 'tabla', GR
 
 #### Query DataProfiling
 ~~~~
-SELECT 'schema.tabla' AS Tabla,
-'campo' AS Campo, count(*) AS Registros,
-SUM(CASE WHEN campo IS NULL THEN 1 ELSE 0 END) AS Nulos,
-SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','VARCHAR2')=1 THEN CASE WHEN campo IS NULL THEN 1 ELSE 0 END ELSE 0 END) AS Blancos
-,SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','NUMBER')=1 THEN CASE WHEN campo =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros
-FROM schema.Tabla;
+SELECT 'analisis_futbol_europeo.team' AS Tabla,'ID_TEAM' AS Campo, count(*) AS Registros,SUM(CASE WHEN ID_TEAM IS NULL THEN 1 ELSE 0 END) AS Nulos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','VARCHAR2')=1 THEN CASE WHEN ID_TEAM IS NULL THEN 1 ELSE 0 END ELSE 0 END) AS Blancos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','NUMBER')=1 THEN CASE WHEN ID_TEAM =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros FROM analisis_futbol_europeo.team UNION ALL
+SELECT 'analisis_futbol_europeo.team' AS Tabla,'TEAM_API_ID' AS Campo, count(*) AS Registros,SUM(CASE WHEN TEAM_API_ID IS NULL THEN 1 ELSE 0 END) AS Nulos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','VARCHAR2')=1 THEN CASE WHEN TEAM_API_ID IS NULL THEN 1 ELSE 0 END ELSE 0 END) AS Blancos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','NUMBER')=1 THEN CASE WHEN TEAM_API_ID =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros FROM analisis_futbol_europeo.team UNION ALL
+SELECT 'analisis_futbol_europeo.team' AS Tabla,'TEAM_FIFA_API_ID' AS Campo, count(*) AS Registros,SUM(CASE WHEN TEAM_FIFA_API_ID IS NULL THEN 1 ELSE 0 END) AS Nulos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','VARCHAR2')=1 THEN CASE WHEN TEAM_FIFA_API_ID IS NULL THEN 1 ELSE 0 END ELSE 0 END) AS Blancos,SUM(CASE WHEN REGEXP_INSTR('NUMBER(7,0)','NUMBER')=1 THEN CASE WHEN TEAM_FIFA_API_ID =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros FROM analisis_futbol_europeo.team;
+
 ~~~~
+
+![Data-Profiling](https://i.ibb.co/qms9r7c/Data-Profiling.jpg)
+
+![Excel](https://i.ibb.co/WKMYN4m/excel-Data-Profiling.jpg
+
 
 
 #### Query para sacar las referencias que tengan mas de un tipo de relacion, sin repetir el tipo de referencia y tengan la misma fecha de inicio
 
-#####Tengo esto
+##### Tengo esto
 
 | Referencia |	Tipo_relacion	| Categoría
 --- | ---: | :---:
