@@ -336,7 +336,13 @@ SELECT 'analisis_futbol_europeo.team' AS Tabla,'TEAM_FIFA_API_ID' AS Campo, coun
 
 ##### Tengo esto
 
+![Tengo](https://i.ibb.co/jrZJgmG/tengo.jpg)
+
+
 ##### Quiero esto
+
+![Quiero](https://i.ibb.co/wRhw1PB/quiero.jpg)
+
 
 ##### Query
 
@@ -378,9 +384,19 @@ group by id) tablatemp on ant.id = tablatemp.id and ant.fecha = max_fecha;
 
 #### Consultas jerarquicas
 
+Clausula CONNECT BY (SelfJoin) 
+
+En este ejemplo vemos el jefe que tiene cada empleado ( FK a si mismo)
+
+~~~~
+SELECT employee_id, last_name, manager_id, LEVEL
+   FROM employees
+   CONNECT BY PRIOR employee_id = manager_id;
+~~~~
+
+![Ejemplo](https://i.ibb.co/h7rQ1dG/jerarquicas.jpg)
+
 #### Funciones de ventana
-
-
 
 #### Funciones DWH
 
