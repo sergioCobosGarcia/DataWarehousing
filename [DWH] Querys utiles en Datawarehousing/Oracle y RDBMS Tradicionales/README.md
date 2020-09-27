@@ -314,4 +314,55 @@ SELECT 'analisis_futbol_europeo.team' AS Tabla,'TEAM_FIFA_API_ID' AS Campo, coun
     order by 1;
 ~~~~
 
+#### Obtener los registros con mayor timestamp con mismo ID (Historico)
+
+##### Tengo esto
+
+##### Quiero esto
+
+##### Query
+
+###### Solución 1
+
+
+~~~~
+with ahora as
+
+(select max(fecha) max_fecha,id
+
+from MAXIMOTIMESTAMP
+
+group by id)
+
+select ant.*
+
+from MAXIMOTIMESTAMP ant
+
+inner join ahora a on ant.id = a.id and ant.fecha = max_fecha;
+
+~~~~
+
+###### Solución 2
+
+~~~~
+
+select ant.*
+
+from MAXIMOTIMESTAMP ant
+
+inner join (select max(fecha) max_fecha,id
+
+from MAXIMOTIMESTAMP
+
+group by id) tablatemp on ant.id = tablatemp.id and ant.fecha = max_fecha;
+
+~~~~
+
+#### Consultas jerarquicas
+
+#### Funciones de ventana
+
+#### Identificar duplicados
+
+#### Funciones DWH
 
