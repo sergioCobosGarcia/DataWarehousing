@@ -440,6 +440,18 @@ SELECT clave,
 
 ##### Función RANK()
 
+Asigna numeros contiguos pero no asigna numeros unicos cuando en una ordenación hay dos registros que toman la misma posición a diferencia de ROW_NUMBER()
+
+~~~
+SELECT 
+	nombre, 
+	cantidad, 
+	RANK() OVER(ORDER BY cantidad asc) 
+FROM 
+	tabla_LAG;
+~~~
+![rank](https://i.ibb.co/0XGrC9F/Rank.jpg)
+
 ##### Función NTILE()
 
 ![NTILE](https://cdn.oracletutorial.com/wp-content/uploads/2019/01/Oracle-NTILE.png)
