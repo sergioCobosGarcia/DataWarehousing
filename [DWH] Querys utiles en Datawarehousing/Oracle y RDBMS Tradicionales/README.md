@@ -35,6 +35,24 @@ modify
 delete from schema.table_name
 WHERE CONS_NAME='constraint'
 ~~~~
+#### Identificar duplicados
+~~~~
+select 
+campo1,
+campo2,
+campo3,
+campo4,
+count(*)
+from tabla
+group by
+campo1,
+campo2,
+campo3,
+campo4
+having count(*) > 1;
+~~~~
+Si la consulta no devuelve registros, no hay duplicados.
+
 #### Borrado columnas ocultas en tablas particionadas
 
 ~~~~
@@ -362,7 +380,7 @@ group by id) tablatemp on ant.id = tablatemp.id and ant.fecha = max_fecha;
 
 #### Funciones de ventana
 
-#### Identificar duplicados
+
 
 #### Funciones DWH
 
