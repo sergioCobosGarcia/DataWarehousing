@@ -28,3 +28,45 @@ COMMENT "Comentario descriptivo de la tabla"
 STORED AS PARQUET
 LOCATION '/ruta/donde/hive/lee/ficheros_parquet_para_poblar_la_tabla'; 
 ~~~~
+
+#### Simular MINUS en HIVE con Left Join
+
+~~~~
+select distinct(a.some_value)
+from table_a a, table_b b
+where a.id = b.a_id 
+and b.some_id = 123
+and b.create_date < '2014-01-01' 
+and b.create_date >= '2013-12-01'  
+MINUS
+select distinct(a.some_value)
+from table_a a, table_b b
+where a.id = b.a_id 
+and b.some_id = 123 
+and b.create_date < '2013-12-01' 
+~~~~
+
+
+~~~~
+SELECT * FROM
+(
+  select distinct(a.some_value)
+  from table_a a, table_b b
+  where a.id = b.a_id 
+  and b.some_id = 123
+  and b.create_date < '2014-01-01' 
+  and b.create_date >= '2013-12-01'  
+) x
+LEFT JOIN 
+(
+  select distinct(a.some_value)
+  from table_a a, table_b b
+  where a.id = b.a_id 
+  and b.some_id = 123 
+  and b.create_date < '2013-12-01'
+) y
+ON 
+  x.some_value = y.some_value
+WHERE 
+  y.some_value IS NULL
+~~~~
