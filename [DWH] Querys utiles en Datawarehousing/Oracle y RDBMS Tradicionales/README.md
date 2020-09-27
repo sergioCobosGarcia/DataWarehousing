@@ -441,9 +441,31 @@ SELECT clave,
 
 ##### Función NTILE()
 
+![NTILE](https://cdn.oracletutorial.com/wp-content/uploads/2019/01/Oracle-NTILE.png)
+
 #### Funciones DWH
 
 ##### Función CUBE()
+
+
+La cláusula GROUP BY CUBE produce una línea de subtotal para cada número de departamento y calcula un total para cada trabajo en cada departamento,
+
+~~~
+SELECT
+   DEPARTMENT_ID,
+   job_ID,
+   SUM(salARY)
+FROM
+   EMPLOYEES
+WHERE
+   DEPARTMENT_ID < 60
+GROUP BY
+   CUBE (DEPARTMENT_ID, job_ID)
+ORDER BY
+   1,2;
+~~~
+
+![CUBE](https://i.ibb.co/84dSXmj/cube.jpg)
 
 ##### Funciones PIVOT() UNPIVOT()
 
