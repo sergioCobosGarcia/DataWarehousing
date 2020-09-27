@@ -98,3 +98,176 @@ SELECT  'ALTER INDEX ' || uip.index_name || ' REBUILD PARTITION ' || uip.partiti
     AND   utp.table_name        = :NOMBRE_TABLA;
 
 ~~~~
+
+#### Procedimiento reconstrucción Index para tablas particionadas y subparticionadas
+
+~~~~
+create or replace PROCEDURE P_REBUILD_INDEXES(
+
+      p_owner      VARCHAR2,
+
+      p_table_name VARCHAR2)
+
+  IS
+
+    v_stmt        VARCHAR2(4000) ;
+
+  BEGIN
+
+ 
+
+  /* p_rebuild_tab_unusable_indexes */
+
+  
+
+  
+
+    FOR i_unusable_part IN
+
+    (SELECT table_owner,
+
+      table_name,
+
+      index_name,
+
+      partition_name,
+
+      subpartition_name,
+
+      status
+
+    FROM
+
+      (SELECT table_owner,
+
+        table_name,
+
+        index_name,
+
+        NULL partition_name,
+
+        NULL subpartition_name,
+
+        status
+
+      FROM all_indexes
+
+      WHERE 1         =1
+
+      AND table_owner =p_owner
+
+      AND table_name  = p_table_name
+
+      AND partitioned = 'NO'
+
+      UNION
+
+      SELECT i.table_owner,
+
+        i.table_name table_name,
+
+        ip.index_name,
+
+        ip.partition_name,
+
+        NULL subpartition_name,
+
+        ip.status
+
+      FROM all_ind_partitions ip,
+
+        all_indexes i
+
+      WHERE ip.index_name =I.INDEX_NAME
+
+      AND ip.INDEX_OWNER  =i.OWNER
+
+      AND I.TABLE_OWNER   =p_owner
+
+      AND I.TABLE_NAME    =p_table_name
+
+      UNION
+
+      SELECT i.table_owner,
+
+        i.table_name table_name,
+
+        isp.index_name,
+
+        NULL partition_name,
+
+        isp.subpartition_name,
+
+        isp.status
+
+      FROM all_ind_subpartitions isp,
+
+        all_indexes i
+
+      WHERE isp.index_name =I.INDEX_NAME
+
+      AND isp.INDEX_OWNER  =i.OWNER
+
+      AND I.TABLE_OWNER    =p_owner
+
+      AND I.TABLE_NAME     =p_table_name
+
+      )
+
+    WHERE status='UNUSABLE'
+
+    ORDER BY partition_name nulls FIRST,
+
+      index_name
+
+    )
+
+  
+
+    LOOP
+
+      IF (i_unusable_part.partition_name IS NULL AND i_unusable_part.subpartition_name IS NULL ) THEN
+
+        v_stmt                           :='ALTER INDEX '||i_unusable_part.table_owner||'.'||i_unusable_part.index_name ||' REBUILD PARALLEL (DEGREE 2)';
+
+        DBMS_OUTPUT.PUT_LINE (v_stmt);
+
+        EXECUTE immediate v_Stmt;
+
+      elsif (i_unusable_part.subpartition_name IS NULL ) THEN
+
+        v_stmt                                 :='ALTER INDEX '||i_unusable_part.table_owner||'.'||i_unusable_part.index_name ||' REBUILD PARTITION '||i_unusable_part.partition_name;
+
+        DBMS_OUTPUT.PUT_LINE (v_stmt);
+
+       EXECUTE immediate v_Stmt;
+
+     ELSE
+
+        v_stmt :='ALTER INDEX '||i_unusable_part.table_owner||'.'||i_unusable_part.index_name ||' REBUILD SUBPARTITION '||i_unusable_part.subpartition_name;
+
+        DBMS_OUTPUT.PUT_LINE (v_stmt);
+
+        EXECUTE immediate v_Stmt;
+
+      END IF;
+
+    END LOOP;
+
+  END;
+~~~~
+
+#### Estadisticas particiones
+
+
+BEGIN DBMS_STATS.GATHER_TABLE_STATS (OWNNAME => 'schema', TABNAME => 'tabla', GRANULARITY => 'PARTITION', PARTNAME=> 'nombreparticion', degree=> 4); END;
+
+#### Query DataProfiling
+~~~~
+SELECT 'schema.tabla' AS Tabla,
+'campo' AS Campo, count(*) AS Registros,
+SUM(CASE WHEN campo IS NULL THEN 1 ELSE 0 END) AS Nulos,
+SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','VARCHAR2')=1 THEN CASE WHEN campo IS NULL THEN 1 ELSE 0 END ELSE 0 END) AS Blancos
+,SUM(CASE WHEN REGEXP_INSTR('NUMBER(5,0)','NUMBER')=1 THEN CASE WHEN campo =0 THEN 1 ELSE 0 END ELSE 0 END) AS Ceros
+FROM schema.Tabla;
+~~~~
