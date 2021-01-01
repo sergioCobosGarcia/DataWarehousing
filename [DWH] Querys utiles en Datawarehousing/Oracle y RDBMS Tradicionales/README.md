@@ -495,5 +495,5 @@ ORDER BY
 
 ##### NVL2()
 
-##### CASE WHEN
+##### CASE WHEN Anidados
 
